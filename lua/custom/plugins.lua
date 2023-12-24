@@ -87,6 +87,9 @@ local plugins = {
     lazy = false,
     config = function()
       vim.notify = require("notify")
+      require("notify").setup({
+        background_colour = "#000000"
+      })
     end,
   },
 
@@ -99,6 +102,47 @@ local plugins = {
   {
     'github/copilot.vim',
     lazy = false,
+  },
+
+  {
+    'mattn/emmet-vim',
+    lazy = false
+  },
+
+  {
+    'filipdutescu/renamer.nvim',
+    lazy = false,
+    config = function ()
+      vim.api.nvim_set_keymap('i', '<F2>', '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('v', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true })
+    end
+  },
+
+  {
+    'simrat39/rust-tools.nvim',
+    lazy = false,
+    config = function ()
+      local rt = require("rust-tools")
+
+      rt.setup({
+        server = {
+          on_attach = function(_, bufnr)
+            -- Hover actions
+            vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+            -- Code action groups
+            vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+          end,
+        },
+      })
+    end
+  },
+
+  {
+    'joshnavdev/indentation-multiline.nvim',
+    config = function ()
+      require('indentation-multiline').setup()
+    end
   }
 }
 
