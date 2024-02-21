@@ -1,11 +1,17 @@
 local none_ls = require("null-ls")
 
+
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
 local opts = {
   sources = {
     none_ls.builtins.formatting.black,
     none_ls.builtins.diagnostics.mypy,
     none_ls.builtins.diagnostics.ruff,
     none_ls.builtins.diagnostics.eslint,
+    none_ls.builtins.formatting.gofumpt,
+    none_ls.builtins.formatting.goimports_reviser,
+    none_ls.builtins.formatting.golines,
   },
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then

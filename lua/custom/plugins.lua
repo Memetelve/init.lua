@@ -10,6 +10,7 @@ local plugins = {
         'pyright',
         'mypy',
         'ruff',
+        'gopls'
       }
     },
     lazy = false,
